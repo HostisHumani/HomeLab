@@ -1,0 +1,4 @@
+keepalived_state: MASTER
+keepalived_priority: 100
+keepalived_interface: eth0
+keepalived_auth_pass: "{{ lookup('community.general.bitwarden', 'keepalived', field='password') | first }}"

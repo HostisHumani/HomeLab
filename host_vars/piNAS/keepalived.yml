@@ -1,0 +1,4 @@
+keepalived_state: BACKUP
+keepalived_priority: 90
+keepalived_interface: enu1
+keepalived_auth_pass: "{{ lookup('community.general.bitwarden', 'keepalived', field='password') | first }}"

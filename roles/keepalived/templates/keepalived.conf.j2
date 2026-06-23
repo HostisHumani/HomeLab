@@ -1,0 +1,28 @@
+vrrp_instance DNS_VIP4 {
+    state {{ keepalived_state }}
+    interface {{ keepalived_interface }}
+    virtual_router_id 53
+    priority {{ keepalived_priority }}
+    advert_int 1
+    version 2
+    authentication {
+        auth_type PASS
+        auth_pass {{ keepalived_auth_pass }}
+    }
+    virtual_ipaddress {
+        192.168.178.53/24
+    }
+}
+
+vrrp_instance DNS_VIP6 {
+    state {{ keepalived_state }}
+    interface {{ keepalived_interface }}
+    virtual_router_id 54
+    priority {{ keepalived_priority }}
+    advert_int 1
+    version 3
+    virtual_ipaddress {
+        fe80::54/64 dev {{ keepalived_interface }}
+        fdf2:33c8:77b8::53/64 dev {{ keepalived_interface }}
+    }
+}

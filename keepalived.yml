@@ -1,0 +1,7 @@
+---
+- name: keepalived deployen
+  hosts:
+    - technitiumdns
+    - piNAS
+  roles:
+    - keepalived

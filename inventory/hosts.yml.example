@@ -1,0 +1,46 @@
+all:
+  children:
+    proxmox:
+      hosts:
+        pve:
+          ansible_host: 192.168.X.X
+          ansible_user: root
+
+    lxc:
+      hosts:
+        technitiumdns:
+          ansible_host: 192.168.X.X
+          ansible_user: root
+        frigate:
+          ansible_host: 192.168.X.X
+          ansible_user: root
+        zabbix:
+          ansible_host: 192.168.X.X
+          ansible_user: root
+        npmplus:
+          ansible_host: 192.168.X.X
+          ansible_user: root
+        paperless:
+          ansible_host: 192.168.X.X
+          ansible_user: root
+        mqtt:
+          ansible_host: 192.168.X.X
+          ansible_user: root
+        zigbee2mqtt:
+          ansible_host: 192.168.X.X
+          ansible_user: root
+        ntfy:
+          ansible_host: 192.168.X.X
+          ansible_user: root
+
+    pi5:
+      hosts:
+        piNAS:
+          ansible_host: 192.168.X.X
+          ansible_user: root
+
+    proxmox_backup:
+      hosts:
+        pbs-node:
+          ansible_host: 192.168.X.X
+          ansible_user: root

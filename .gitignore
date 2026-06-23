@@ -1,0 +1,17 @@
+# Secrets und sensible Daten
+*.vault
+*.secret
+.env
+secrets/
+host_vars/*/vault.yml
+
+# Inventory mit echten IPs
+inventory/production.yml
+
+# Ansible temporäre Dateien
+*.retry
+.ansible/
+
+# Editor
+.vscode/
+*.swp

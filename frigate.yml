@@ -1,0 +1,5 @@
+---
+- name: frigate deployen
+  hosts: frigate
+  roles:
+    - frigate

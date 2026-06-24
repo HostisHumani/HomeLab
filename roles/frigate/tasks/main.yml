@@ -1,0 +1,25 @@
+---
+- name: Frigate Verzeichnis erstellen
+  ansible.builtin.file:
+    path: /opt/frigate
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: docker-compose.yml deployen
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: /opt/frigate/docker-compose.yml
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Zabbix UserParameter für frigate deployen
+  ansible.builtin.copy:
+    src: frigate.conf
+    dest: /etc/zabbix/zabbix_agent2.d/frigate.conf
+    owner: root
+    group: zabbix
+    mode: '0640'
+  notify: zabbix-agent2 neu starten

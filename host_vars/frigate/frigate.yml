@@ -1,0 +1,2 @@
+frigate_rtsp_password: "{{ lookup('community.general.bitwarden', 'frigate-rtsp', field='password') | first }}"
+frigate_plus_api_key: "{{ lookup('community.general.bitwarden', 'frigate-plus-api', field='password') | first }}"

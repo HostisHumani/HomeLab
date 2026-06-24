@@ -1,0 +1,31 @@
+services:
+  frigate:
+    container_name: frigate
+    privileged: true
+    restart: unless-stopped
+    image: ghcr.io/blakeblackshear/frigate:stable
+    shm_size: "1024mb"
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/bus/usb:/dev/bus/usb
+      - /dev/video0:/dev/video0
+      - /dev/video1:/dev/video1
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./config:/config
+      - ./model_cache:/model_cache
+      - /media/frigate:/media/frigate
+      - type: tmpfs
+        target: /tmp/cache
+        tmpfs:
+          size: 512000000
+    ports:
+      - "5000:5000"
+      - "8971:8971"
+      - "8554:8554"
+      - "8555:8555/tcp"
+      - "8555:8555/udp"
+      - "1984:1984"
+    environment:
+      FRIGATE_RTSP_PASSWORD: "{{ frigate_rtsp_password }}"
+      PLUS_API_KEY: "{{ frigate_plus_api_key }}"

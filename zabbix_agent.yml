@@ -1,0 +1,5 @@
+---
+- name: zabbix_agent deployen
+  hosts: all:!lxc_alpine
+  roles:
+    - zabbix_agent

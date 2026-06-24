@@ -15,3 +15,4 @@ inventory/production.yml
 # Editor
 .vscode/
 *.swp
+group_vars/all.yml

@@ -1,0 +1,10 @@
+---
+- name: paperless neu starten
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: restarted
+  loop:
+    - paperless-consumer
+    - paperless-scheduler
+    - paperless-task-queue
+    - paperless-webserver

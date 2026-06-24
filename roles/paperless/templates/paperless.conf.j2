@@ -1,0 +1,16 @@
+# Required services
+PAPERLESS_REDIS=redis://localhost:6379
+PAPERLESS_DBHOST=localhost
+PAPERLESS_DBPORT=5432
+PAPERLESS_DBNAME=paperlessdb
+PAPERLESS_DBUSER=paperless
+PAPERLESS_DBPASS={{ paperless_dbpass }}
+# Paths and folders
+PAPERLESS_CONSUMPTION_DIR=/opt/paperless_data/consume
+PAPERLESS_DATA_DIR=/opt/paperless_data/data
+PAPERLESS_EMPTY_TRASH_DIR=/opt/paperless_data/trash
+PAPERLESS_MEDIA_ROOT=/opt/paperless_data/media
+PAPERLESS_STATICDIR=/opt/paperless/static
+# Security and hosting
+PAPERLESS_SECRET_KEY={{ paperless_secret_key }}
+PAPERLESS_URL={{ paperless_url }}

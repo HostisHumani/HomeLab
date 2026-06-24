@@ -1,0 +1,3 @@
+paperless_url: "{{ lookup('community.general.bitwarden', 'PAPERLESS_URL', field='password') | first }}"
+paperless_secret_key: "{{ lookup('community.general.bitwarden', 'PAPERLESS_SECRET_KEY', field='password') | first }}"
+paperless_dbpass: "{{ lookup('community.general.bitwarden', 'PAPERLESS_DBPASS', field='password') | first }}"

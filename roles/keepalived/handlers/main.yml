@@ -3,3 +3,8 @@
   ansible.builtin.service:
     name: keepalived
     state: restarted
+
+- name: zabbix-agent2 neu starten
+  ansible.builtin.service:
+    name: zabbix-agent2
+    state: restarted

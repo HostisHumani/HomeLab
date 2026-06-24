@@ -18,3 +18,12 @@
     name: keepalived
     state: started
     enabled: true
+
+- name: Zabbix UserParameter für keepalived deployen
+  ansible.builtin.copy:
+    src: keepalived.conf
+    dest: /etc/zabbix/zabbix_agent2.d/keepalived.conf
+    owner: root
+    group: zabbix
+    mode: '0640'
+  notify: zabbix-agent2 neu starten

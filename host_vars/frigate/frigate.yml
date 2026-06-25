@@ -1,7 +1,7 @@
 frigate_rtsp_password: "{{ lookup('community.general.bitwarden', 'frigate-rtsp', field='password') | first }}"
 frigate_plus_api_key: "{{ lookup('community.general.bitwarden', 'frigate-plus-api', field='password') | first }}"
 frigate_mqtt_host: 192.168.178.91
-frigate_mqtt_password: "{{ lookup('community.general.bitwarden', 'frigate-mqtt-password', field='password') | first }}"
+frigate_mqtt_password: "{{ lookup('community.general.bitwarden', 'mqtt-frigate-password', field='password') | first }}"
 frigate_cam_tapo_user: "{{ lookup('community.general.bitwarden', 'frigate-cam-tapo-user', field='password') | first }}"
 frigate_cam_tapo_password: "{{ lookup('community.general.bitwarden', 'frigate-cam-tapo-password', field='password') | first }}"
 frigate_cam_imou_password: "{{ lookup('community.general.bitwarden', 'frigate-cam-imou-password', field='password') | first }}"

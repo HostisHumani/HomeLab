@@ -1,0 +1,16 @@
+---
+- name: NPMplus Verzeichnis erstellen
+  ansible.builtin.file:
+    path: /opt
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: compose.yaml deployen
+  ansible.builtin.copy:
+    src: compose.yaml
+    dest: /opt/compose.yaml
+    owner: root
+    group: root
+    mode: '0644'

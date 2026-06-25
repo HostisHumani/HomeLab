@@ -8,7 +8,7 @@
     name:
       - curl
       - wget
-      - vim
+      - nano
       - htop
       - ca-certificates
       - unattended-upgrades

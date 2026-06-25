@@ -1,0 +1,5 @@
+---
+- name: zabbix deployen
+  hosts: zabbix
+  roles:
+    - zabbix

@@ -3,3 +3,9 @@
   ansible.builtin.service:
     name: zabbix-agent2
     state: restarted
+
+- name: frigate neu starten
+  community.docker.docker_compose_v2:
+    project_src: /opt/frigate
+    state: present
+    recreate: always

@@ -1,0 +1,527 @@
+############################################################
+# FRIGATE GLOBAL SETTINGS                                  #
+############################################################
+
+version: 0.17-0
+
+mqtt:
+  host: {{ frigate_mqtt_host }}
+  user: frigate
+  password: {{ frigate_mqtt_password }}
+
+ui:
+  timezone: Europe/Berlin
+  time_format: 24hour
+  date_style: short
+  time_style: medium
+  unit_system: metric
+
+logger:
+  default: info
+  logs:
+    ffmpeg.keller.detect: warning
+
+database:
+  path: /config/frigate.db
+
+detectors:
+  coral:
+    type: edgetpu
+    device: usb
+
+model:
+  path: plus://a1c68610ad4f17b12e0aec3c84c787bc
+
+ffmpeg:
+  hwaccel_args: preset-vaapi
+  input_args:
+    - -avoid_negative_ts
+    - make_zero
+    - -fflags
+    - +genpts+discardcorrupt
+    - -rtsp_transport
+    - tcp
+
+go2rtc:
+  streams:
+    haustuer_high:
+      - rtsp://{{ frigate_cam_tapo_user }}:{{ frigate_cam_tapo_password }}@192.168.178.104:554/stream1
+      - ffmpeg:haustuer_high#audio=opus
+    haustuer:
+      - rtsp://127.0.0.1:8554/haustuer_high
+    carport_high:
+      - rtsp://{{ frigate_cam_tapo_user }}:{{ frigate_cam_tapo_password }}@192.168.178.51:554/stream1
+      - ffmpeg:carport_high#audio=opus
+    carport:
+      - rtsp://127.0.0.1:8554/carport_high
+    keller_high:
+      - rtsp://{{ frigate_cam_tapo_user }}:{{ frigate_cam_tapo_password }}@192.168.178.55:554/stream1
+      - ffmpeg:keller_high#audio=opus
+    keller:
+      - rtsp://127.0.0.1:8554/keller_high
+    vorgarten_high:
+      - rtsp://admin:{{ frigate_cam_imou_password }}@192.168.178.110:554/cam/realmonitor?channel=1&subtype=0
+    vorgarten:
+      - rtsp://127.0.0.1:8554/vorgarten_high
+    garten_high:
+      - rtsp://admin:{{ frigate_cam_imou_password }}@192.168.178.111:554/cam/realmonitor?channel=1&subtype=0
+    garten:
+      - rtsp://127.0.0.1:8554/garten_high
+  webrtc:
+    candidates:
+      - 192.168.178.106:8555
+
+############################################################
+# GLOBAL OBJECT & RECORDING RULES                          #
+############################################################
+
+objects:
+  track:
+    - person
+    - face
+    - car
+    - motorcycle
+    - bicycle
+    - license_plate
+    - amazon
+    - ups
+    - dhl
+    - gls
+    - dpd
+    - dog
+    - cat
+    - deer
+    - horse
+    - raccoon
+    - fox
+    - squirrel
+    - hedgehog
+    - mustelid
+    - package
+  filters:
+    person:
+      threshold: 0.80
+      min_score: 0.70
+      min_area: 6000
+    car:
+      threshold: 0.85
+      min_score: 0.75
+      min_area: 11000
+    motorcycle:
+      threshold: 0.7
+      min_score: 0.6
+      min_area: 9000
+    bicycle:
+      threshold: 0.8
+      min_score: 0.65
+      min_area: 5000
+    dog:
+      threshold: 0.85
+      min_score: 0.6
+      min_area: 2500
+    cat:
+      threshold: 0.7
+      min_score: 0.5
+      min_area: 1200
+    horse:
+      threshold: 0.7
+      min_score: 0.5
+      min_area: 15000
+    deer:
+      threshold: 0.75
+      min_score: 0.55
+      min_area: 5000
+    fox:
+      threshold: 0.65
+      min_score: 0.50
+      min_area: 1200
+    raccoon:
+      threshold: 0.65
+      min_score: 0.50
+      min_area: 2000
+    squirrel:
+      threshold: 0.6
+      min_score: 0.4
+      min_area: 300
+    hedgehog:
+      threshold: 0.6
+      min_score: 0.4
+      min_area: 300
+    mustelid:
+      threshold: 0.6
+      min_score: 0.4
+      min_area: 300
+    package:
+      threshold: 0.6
+      min_score: 0.4
+      min_area: 500
+    amazon:
+      threshold: 0.5
+      min_area: 1000
+    ups:
+      threshold: 0.5
+      min_area: 1000
+    dhl:
+      threshold: 0.5
+      min_area: 1000
+    gls:
+      threshold: 0.5
+      min_area: 1000
+    dpd:
+      threshold: 0.5
+      min_area: 1000
+    face:
+      threshold: 0.7
+      min_area: 100
+    license_plate:
+      threshold: 0.7
+      min_score: 0.6
+      min_area: 50
+
+record:
+  enabled: true
+  alerts:
+    retain:
+      days: 7
+      mode: active_objects
+  detections:
+    retain:
+      days: 7
+      mode: active_objects
+  continuous:
+    days: 5
+  motion:
+    days: 5
+
+snapshots:
+  enabled: true
+  clean_copy: true
+  bounding_box: true
+  crop: false
+  quality: 100
+  retain:
+    default: 10
+
+############################################################
+# CAMERA CONFIGURATIONS                                    #
+############################################################
+
+cameras:
+  carport:
+    enabled: true
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/carport_high
+          roles:
+            - record
+            - detect
+            - audio
+    detect:
+      enabled: true
+      width: 1280
+      height: 720
+      fps: 7
+      annotation_offset: -1600
+    lpr:
+      enabled: false
+    onvif:
+      host: http://192.168.178.51:2020/onvif/device_service
+      port: 2020
+      user: {{ frigate_cam_tapo_user }}
+      password: {{ frigate_cam_tapo_password }}
+      autotracking:
+        enabled: false
+        track: [person, cat, dog, car]
+        required_zones: [Carport_rechts, Carport_links, Carport_mitte]
+        return_preset: einfahrt
+    motion:
+      threshold: 30
+      contour_area: 10
+      improve_contrast: true
+    zones:
+      Carport_main:
+        coordinates: 
+          0.012,0.362,0,0.384,0.001,0.999,0.966,1,0.702,0.303,0.221,0.367,0.069,0.536,0.027,0.334
+        loitering_time: 0
+        friendly_name: Carport
+        inertia: 1
+      gehweg:
+        coordinates: 
+          0.058,0.338,0.133,0.305,0.165,0.265,0.151,0.247,0.398,0.193,0.678,0.177,0.689,0.196,0.69,0.27,0.693,0.302,0.276,0.354,0.199,0.367,0.104,0.378
+        loitering_time: 0
+        friendly_name: Gehweg
+        inertia: 1
+        objects:
+          - bicycle
+          - car
+          - cat
+          - deer
+          - dog
+          - fox
+          - horse
+          - motorcycle
+          - package
+          - person
+          - raccoon
+          - squirrel
+      carport_eingang_links:
+        coordinates: 
+          0.221,0.366,0.069,0.534,0.028,0.329,0.015,0.353,0,0.385,0,0.103,0.01,0.127,0.025,0.171,0.04,0.216,0.057,0.339,0.091,0.381
+        loitering_time: 0
+        friendly_name: Carport_Eingang_Links
+        inertia: 1
+        objects:
+          - person
+          - cat
+          - dog
+          - raccoon
+      carport_eingang_rechts:
+        coordinates: 
+          0.701,0.301,0.693,0.301,0.689,0.193,0.718,0,0.823,0,1,0,0.999,0.998,0.966,1
+        loitering_time: 0
+        friendly_name: Carport_Eingang_Rechts
+        inertia: 1
+        objects:
+          - person
+          - cat
+          - dog
+          - raccoon
+          - fox
+    review:
+      detections:
+        enabled: true
+        required_zones:
+          - Carport_main
+          - gehweg
+          - carport_eingang_links
+          - carport_eingang_rechts
+      alerts:
+        required_zones:
+          - Carport_main
+          - carport_eingang_links
+          - carport_eingang_rechts
+    objects:
+      filters:
+        car:
+          mask:
+            - 0.414,1,0.413,0.371,0.507,0.256,0.757,0.244,0.844,0.424,1,0.714,1,1
+            - 0.375,1,0.395,0.367,0.089,0.323,0,0.406,0.001,0.998
+        waste_bin: {}
+
+  vorgarten:
+    enabled: true
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/vorgarten_high
+          input_args: preset-rtsp-generic
+          roles:
+            - detect
+            - record
+            - audio
+    detect:
+      enabled: true
+      width: 1280
+      height: 720
+      fps: 5
+      annotation_offset: -1200
+    onvif:
+      host: 192.168.178.110
+      port: 80
+      user: admin
+      password: {{ frigate_cam_imou_password }}
+    motion:
+      threshold: 30
+      contour_area: 10
+      improve_contrast: true
+      mask:
+        - 0.751,0.058,0.751,0.089,0.963,0.092,0.962,0.057
+        - 0.607,1,0.618,0.965,0.625,0.925,0.657,0.922,0.679,0.921,0.692,0.88,0.716,0.869,0.736,0.845,0.776,0.852,0.801,0.904,0.822,0.909,0.842,0.843,0.869,0.869,0.896,0.892,0.917,0.913,0.933,0.932,0.963,0.946,0.999,0.96,1,1,0.763,1
+        - 0.122,0.132,0.105,0.116,0.113,0,0.199,0,0.399,0,0.455,0,0.493,0,0.525,0.157,0.47,0.17,0.478,0.231,0.48,0.254,0.467,0.285,0.439,0.281,0.413,0.282,0.381,0.294,0.351,0.279,0.315,0.214,0.262,0.21,0.238,0.215,0.212,0.215,0.158,0.22,0.139,0.176
+        - 0.634,0,0.751,0,0.764,0.148,0.888,0.201,0.914,0.207,0.946,0.219,0.958,0.259,1,0.274,1,0.365,0.97,0.405,0.889,0.413,0.784,0.387,0.72,0.365,0.729,0.202,0.623,0.121
+    zones:
+      carport_eingang:
+        coordinates: 
+          0.591,0.242,0.692,0.257,0.686,0.434,0.727,0.454,0.747,0.499,0.758,0.536,0.744,0.583,0.701,0.62,0.646,0.647,0.572,0.663,0.564,0.507,0.592,0.513,0.598,0.5,0.6,0.489,0.585,0.461
+        loitering_time: 0
+        friendly_name: Carport_Eingang
+        inertia: 2
+        objects: person
+    objects:
+      filters:
+        bicycle:
+          mask: 
+            0.3,0.38,0.34,0.375,0.337,0.456,0.31,0.47,0.294,0.463,0.293,0.423
+        car: {}
+    review:
+      alerts:
+        required_zones: carport_eingang
+
+  haustuer:
+    enabled: true
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/haustuer_high
+          roles:
+            - record
+            - detect
+            - audio
+    detect:
+      enabled: true
+      width: 1280
+      height: 720
+      fps: 5
+      annotation_offset: -1200
+    onvif:
+      host: http://192.168.178.104:2020/onvif/device_service
+      port: 2020
+      user: {{ frigate_cam_tapo_user }}
+      password: {{ frigate_cam_tapo_password }}
+    motion:
+      threshold: 30
+      contour_area: 10
+      improve_contrast: true
+    zones:
+      haustuer_carport_eingang:
+        coordinates: 
+          0.826,0.056,0.877,0.047,0.921,0.193,0.845,0.648,0.799,0.627,0.716,0.423,0.785,0.38,0.83,0.338,0.845,0.308,0.834,0.282,0.793,0.26
+        loitering_time: 0
+        inertia: 2
+        objects:
+          - person
+          - bicycle
+        friendly_name: Haustuer_Carport_Eingang
+      lieferanteneingang:
+        coordinates: 
+          0.257,0.161,0.254,0.075,0.251,0,0.293,0,0.399,0.002,0.397,0.244,0.48,0.257,0.445,0.43,0.3,0.404,0.325,0.343,0.188,0.317,0.178,0.216
+        loitering_time: 0
+        objects:
+          - person
+          - dog
+          - cat
+        friendly_name: Lieferanteneingang
+        inertia: 2
+    review:
+      detections:
+        enabled: true
+      alerts:
+        required_zones:
+          - haustuer_carport_eingang
+          - lieferanteneingang
+    objects:
+      filters:
+        bicycle:
+          mask: 
+            0.275,0.154,0.276,0.283,0.322,0.248,0.365,0.241,0.366,0.12,0.351,0.078,0.308,0.099
+        person: {}
+        package: {}
+
+  garten:
+    enabled: true
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/garten_high
+          input_args: preset-rtsp-generic
+          roles:
+            - detect
+            - record
+            - audio
+    detect:
+      enabled: true
+      width: 1280
+      height: 720
+      fps: 5
+      annotation_offset: -1200
+    onvif:
+      host: 192.168.178.111
+      port: 80
+      user: admin
+      password: {{ frigate_cam_imou_password }}
+    motion:
+      threshold: 40
+      contour_area: 15
+      improve_contrast: true
+      mask:
+        - 0.752,0.091,0.961,0.091,0.961,0.058,0.751,0.057
+        - 0.597,0,0.608,0.102,0.609,0.16,0.734,0.24,0.86,0.333,0.896,0.26,0.906,0.358,1,0.372,1,0
+        - 0,0.275,0.04,0.229,0.121,0.226,0.188,0.225,0.263,0.255,0.329,0.246,0.45,0.097,0.508,0,0,0
+    zones: {}
+    review: {}
+    objects:
+      filters:
+        waste_bin: {}
+
+  keller:
+    enabled: true
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/keller_high
+          roles:
+            - record
+            - detect
+            - audio
+    detect:
+      enabled: true
+      width: 1280
+      height: 720
+      fps: 5
+    onvif:
+      host: http://192.168.178.55:2020/onvif/device_service
+      port: 2020
+      user: {{ frigate_cam_tapo_user }}
+      password: {{ frigate_cam_tapo_password }}
+    motion:
+      threshold: 30
+      contour_area: 10
+      improve_contrast: true
+    zones: {}
+    objects: {}
+    review:
+      detections:
+        enabled: true
+
+lpr:
+  enabled: false
+  device: GPU
+  model_size: small
+  detection_threshold: 0.3
+  min_area: 200
+  recognition_threshold: 0.3
+  min_plate_length: 3
+  format: ^[A-Z]{1,3}[- ]?[A-Z]{1,2}[- ]?[0-9]{1,4}$
+  match_distance: 1
+  known_plates: {}
+  enhancement: 2
+  debug_save_plates: false
+
+face_recognition:
+  enabled: false
+  model_size: small
+  unknown_score: 0.2
+  recognition_threshold: 0.3
+  min_area: 300
+  min_faces: 1
+  save_attempts: 50
+  blur_confidence_filter: true
+
+semantic_search:
+  enabled: false
+  model_size: small
+
+classification:
+  bird:
+    enabled: false
+  custom:
+    Personen:
+      enabled: true
+      name: Personen
+      threshold: 0.8
+      object_config:
+        objects:
+          - person
+        classification_type: sub_label
+      save_attempts: 500
+
+notifications:
+  enabled: true
+  email: webmaster@luebb.de
+  cooldown: 120

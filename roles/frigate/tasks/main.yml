@@ -23,3 +23,12 @@
     group: zabbix
     mode: '0640'
   notify: zabbix-agent2 neu starten
+
+- name: Frigate config.yml deployen
+  ansible.builtin.template:
+    src: config.yml.j2
+    dest: /opt/frigate/config/config.yml
+    owner: root
+    group: root
+    mode: '0644'
+  notify: frigate neu starten

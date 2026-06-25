@@ -1,0 +1,96 @@
+version: 5
+homeassistant:
+  enabled: true
+frontend:
+  enabled: true
+  package: zigbee2mqtt-frontend
+  port: 8099
+mqtt:
+  server: mqtt://192.168.178.91:1883
+  user: zigbee2mqtt
+  password: {{ zigbee2mqtt_mqtt_password }}
+  base_topic: zigbee2mqtt
+serial:
+  port: /dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_44df7efe414fef11b17a4ab3174bec31-if00-port0
+  adapter: zstack
+  baudrate: 115200
+advanced:
+  transmit_power: 20
+  log_level: info
+  last_seen: ISO_8601_local
+  pan_id: 25316
+  ext_pan_id:
+    - 182
+    - 185
+    - 177
+    - 176
+    - 2
+    - 119
+    - 49
+    - 35
+  network_key:
+{% for key in zigbee2mqtt_network_key.split(',') %}
+    - {{ key | trim }}
+{% endfor %}
+availability:
+  enabled: true
+devices:
+  '0x00178801082ec3a4':
+    friendly_name: Wohnzimmer Decke
+  '0x00178801082cdfb8':
+    friendly_name: Esszimmer Decke
+  '0x001788010837a99b':
+    friendly_name: Schlafzimmer Decke
+  '0x00178801062c2bdb':
+    friendly_name: Flur Decke
+  '0x00178801064e6f9e':
+    friendly_name: Flur Kaiser Lampe
+  '0x08b95ffffec78e6b':
+    friendly_name: Wohnzimmer Retro Hängelampe
+  '0x00178801067a29e9':
+    friendly_name: Badezimmer Decke
+  '0x00158d008afdff8a':
+    friendly_name: Schlafzimmer Temperatur
+  '0x00158d008afe1aa2':
+    friendly_name: Flur Temperatur
+  '0x00158d008afdfc58':
+    friendly_name: Badezimmer Temperatur
+  '0x04e3e5fffe0b5a73':
+    friendly_name: Küche Bewegungsmelder
+  '0x94ec32fffeff34c6':
+    friendly_name: Flur Bewegungsmelder
+  '0x94ec32fffeff0d56':
+    friendly_name: Küche 2 Bewegungsmelder
+  '0xfc4d6afffe239dde':
+    friendly_name: Flur 2 Bewegungsmelder
+  '0x0c2a6ffffe550778':
+    friendly_name: Briefkasten
+  '0x00178801086ff120':
+    friendly_name: Schreibtisch Remote
+  '0x0017880106ea492a':
+    friendly_name: Flur Remote
+  '0x0017880108096960':
+    friendly_name: Küche Remote
+  '0x001788010ca6a9dd':
+    friendly_name: HUE Steckdose
+  '0xfc4d6afffe31c30a':
+    friendly_name: Retro Bett
+  '0xa4c13849a08d4db8':
+    friendly_name: Blumen Sensor
+  '0xc4d8c8fffe2c628f':
+    friendly_name: Ignatz Remote
+  '0xa4c1380d9fb2ffff':
+    friendly_name: Spülmaschine
+  '0xa4c1380d4f98ffff':
+    friendly_name: Waschmaschine
+  '0xf0d1b8be240bd0fd':
+    friendly_name: Schlafzimmer Kommode
+  '0x00178801062eb0fe':
+    friendly_name: Küche Decke
+groups:
+  '1':
+    friendly_name: Schlafzimmer Lichter
+  '2':
+    friendly_name: Flur Lichter
+  '3':
+    friendly_name: Wohnzimmer Lichter

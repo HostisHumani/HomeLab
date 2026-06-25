@@ -1,0 +1,9 @@
+---
+- name: zigbee2mqtt configuration.yaml deployen
+  ansible.builtin.template:
+    src: configuration.yaml.j2
+    dest: /opt/zigbee2mqtt/data/configuration.yaml
+    owner: root
+    group: root
+    mode: '0644'
+  notify: zigbee2mqtt neu starten

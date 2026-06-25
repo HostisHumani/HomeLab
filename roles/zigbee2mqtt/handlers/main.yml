@@ -1,0 +1,5 @@
+---
+- name: zigbee2mqtt neu starten
+  ansible.builtin.service:
+    name: zigbee2mqtt
+    state: restarted

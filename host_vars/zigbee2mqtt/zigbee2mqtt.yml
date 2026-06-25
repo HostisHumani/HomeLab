@@ -1,0 +1,2 @@
+zigbee2mqtt_mqtt_password: "{{ lookup('community.general.bitwarden', 'mqtt-zigbee2mqtt-password', field='password') | first }}"
+zigbee2mqtt_network_key: "{{ lookup('community.general.bitwarden', 'zigbee2mqtt-network-key', field='password') | first }}"

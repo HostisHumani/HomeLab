@@ -1,0 +1,5 @@
+---
+- name: mqtt deployen
+  hosts: mqtt
+  roles:
+    - mqtt

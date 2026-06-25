@@ -1,0 +1,31 @@
+---
+- name: mosquitto installieren
+  ansible.builtin.package:
+    name: mosquitto
+    state: present
+
+- name: mosquitto.conf deployen
+  ansible.builtin.template:
+    src: mosquitto.conf.j2
+    dest: /etc/mosquitto/mosquitto.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: mosquitto neu starten
+
+- name: default.conf deployen
+  ansible.builtin.template:
+    src: default.conf.j2
+    dest: /etc/mosquitto/conf.d/default.conf
+    owner: mosquitto
+    group: mosquitto
+    mode: '0644'
+  notify: mosquitto neu starten
+
+- name: MQTT Passwörter setzen
+  ansible.builtin.shell: |
+    mosquitto_passwd -b /etc/mosquitto/passwd homeassistant {{ mqtt_homeassistant_password }}
+    mosquitto_passwd -b /etc/mosquitto/passwd zigbee2mqtt {{ mqtt_zigbee2mqtt_password }}
+    mosquitto_passwd -b /etc/mosquitto/passwd frigate {{ mqtt_frigate_password }}
+  notify: mosquitto neu starten
+  no_log: true

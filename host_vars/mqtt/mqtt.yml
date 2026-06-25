@@ -1,0 +1,3 @@
+mqtt_homeassistant_password: "{{ lookup('community.general.bitwarden', 'mqtt-homeassistant-password', field='password') | first }}"
+mqtt_zigbee2mqtt_password: "{{ lookup('community.general.bitwarden', 'mqtt-zigbee2mqtt-password', field='password') | first }}"
+mqtt_frigate_password: "{{ lookup('community.general.bitwarden', 'mqtt-frigate-password', field='password') | first }}"

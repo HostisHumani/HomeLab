@@ -1,0 +1,5 @@
+---
+- name: Pbs deployen
+  hosts: proxmox_backup
+  roles:
+    - pbs

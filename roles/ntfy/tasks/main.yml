@@ -1,0 +1,9 @@
+---
+- name: Ntfy server.yml deployen
+  ansible.builtin.template:
+    src: server.yml.j2
+    dest: /etc/ntfy/server.yml
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Ntfy neu starten

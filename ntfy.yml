@@ -1,0 +1,5 @@
+---
+- name: Ntfy deployen
+  hosts: ntfy
+  roles:
+    - ntfy

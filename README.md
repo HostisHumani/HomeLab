@@ -1,16 +1,79 @@
-# HomeLab
-Proxmox on: MacMini 2018 6 x Intel(R) Core(TM) i5-8500B CPU @ 3.00GHz (1 Socket) 16 GB RAM 
+# My HomeLab
 
-OpenMediaVault on: Pi5 8 GB RAM
+Infrastructure as Code for my personal homelab.
 
-Proxmox Backup Server on: HP 255 G5 4 x AMD A6-7310 APU with AMD Radeon R4 Graphics 8 GB RAM
+The goal of this project is to build a reproducible, version-controlled and well documented homelab using Ansible as the primary automation tool.
 
-## Zigbee2MQTT Geräte-Management
+## Features
 
-Neue Geräte werden über die Zigbee2MQTT Web UI hinzugefügt.
-Nach dem Hinzufügen die configuration.yaml ins Repo übernehmen:
+* Infrastructure as Code with Ansible
+* Idempotent deployments
+* Secrets managed with Bitwarden CLI
+* Git-based configuration management
+* High Availability with Keepalived
+* Docker and bare-metal deployments
+* Proxmox VE & Proxmox Backup Server support
+* Zabbix monitoring
 
-```bash
-ansible zigbee2mqtt -m fetch -a "src=/opt/zigbee2mqtt/data/configuration.yaml dest=roles/zigbee2mqtt/templates/configuration.yaml flat=yes"
-git add . && git commit -m "zigbee2mqtt: add device XYZ" && git push
-```
+## Infrastructure
+
+| Host                  | Hardware                                        | Role                |
+| --------------------- | ----------------------------------------------- | ------------------- |
+| Proxmox VE            | Mac mini 2018 • Intel Core i5-8500B • 16 GB RAM | Virtualization Host |
+| OpenMediaVault        | Raspberry Pi 5 • 8 GB RAM                       | NAS & Docker Host   |
+| Proxmox Backup Server | HP 255 G5 • AMD A6-7310 • 8 GB RAM              | Backup Server       |
+
+## Services
+
+| Service                     | Platform             | Management     | Purpose                                           |
+| --------------------------- | -------------------- | -------------- | ------------------------------------------------- |
+| Proxmox VE                  | Bare Metal           | Ansible        | Hypervisor                                        |
+| Proxmox Backup Server       | Bare Metal           | Ansible        | Backup Server                                     |
+| Technitium DNS              | Debian LXC           | Ansible        | Primary DNS Server (includes Keepalived for HA)   |
+| NPMplus                     | Alpine LXC + Docker  | Ansible        | Reverse Proxy                                     |
+| Frigate                     | Debian LXC + Docker  | Ansible        | Network Video Recorder                            |
+| Paperless-ngx               | Debian LXC           | Ansible        | Document Management                               |
+| Mosquitto                   | Debian LXC           | Ansible        | MQTT Broker                                       |
+| Zigbee2MQTT                 | Debian LXC           | Ansible        | Zigbee Gateway                                    |
+| ntfy                        | Debian LXC           | Ansible        | Push Notifications                                |
+| Zabbix                      | Debian LXC           | Ansible        | Monitoring                                        |
+| Home Assistant              | Home Assistant OS    | Appliance      | Home Automation                                   |
+| OpenMediaVault              | Raspberry Pi 5       | Appliance      | NAS & Docker Host                                 |
+| Chrony                      | OMV + Docker Compose | Docker Compose | Local NTP Server                                  |
+| Fritz!Box Zabbix Monitoring | OMV + Docker Compose | Docker Compose | FRITZ!Box Monitoring                              |
+| Jotty                       | OMV + Docker Compose | Docker Compose | Notes Application                                 |
+| Linkwarden                  | OMV + Docker Compose | Docker Compose | Bookmark Manager                                  |
+| Radicale                    | OMV + Docker Compose | Docker Compose | CalDAV/CardDAV Server                             |
+| Technitium DNS (Fallback)   | OMV + Docker Compose | Docker Compose | Secondary DNS Server (includes Keepalived for HA) |
+
+## Scope
+
+This repository serves as the single source of truth for my homelab infrastructure.
+
+It contains the Ansible roles, inventories, variables and configuration required to deploy and maintain the managed systems.
+
+Not every component is managed by Ansible. Some systems intentionally remain outside of Ansible because they are distributed as dedicated appliances or use their own management interface.
+
+### Managed by Ansible
+
+* Host configuration
+* System updates
+* Service configuration
+* Docker-based applications
+* Monitoring
+* High Availability
+* Infrastructure provisioning
+
+### Managed outside of Ansible
+
+* Home Assistant OS
+* OpenMediaVault
+* Docker Compose stacks running on OpenMediaVault
+
+## Roadmap
+
+* [ ] Dell PowerEdge T440 migration
+* [ ] OPNsense firewall
+* [ ] Immich
+* [ ] GitHub Actions
+* [ ] Extended documentation

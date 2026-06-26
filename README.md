@@ -78,6 +78,28 @@ Not every component is managed by Ansible. Some systems intentionally remain out
 * [ ] GitHub Actions
 * [ ] Extended documentation
 
+## Getting Started
+
+Clone the repository:
+
+```bash
+git clone https://github.com/HostisHumani/HomeLab.git
+cd HomeLab
+```
+
+Create your global configuration:
+
+```bash
+cp group_vars/all.yml.example group_vars/all.yml
+```
+
+Adjust the inventory and Bitwarden items to match your environment.
+
+Run the deployment:
+
+```bash
+ansible-playbook site.yml
+```
 
 ## License
 

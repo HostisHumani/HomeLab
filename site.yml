@@ -1,0 +1,62 @@
+---
+- name: Common auf allen Hosts deployen
+  hosts: all:!lxc_alpine
+  roles:
+    - common
+
+- name: Zabbix Agent auf allen Hosts deployen
+  hosts: all:!lxc_alpine
+  roles:
+    - zabbix_agent
+
+- name: Keepalived deployen
+  hosts:
+    - technitiumdns
+    - piNAS
+  roles:
+    - keepalived
+
+- name: Frigate deployen
+  hosts: frigate
+  roles:
+    - frigate
+
+- name: Paperless deployen
+  hosts: paperless
+  roles:
+    - paperless
+
+- name: Npmplus deployen
+  hosts: npmplus
+  roles:
+    - npmplus
+
+- name: Zabbix deployen
+  hosts: zabbix
+  roles:
+    - zabbix
+
+- name: Mqtt deployen
+  hosts: mqtt
+  roles:
+    - mqtt
+
+- name: Zigbee2mqtt deployen
+  hosts: zigbee2mqtt
+  roles:
+    - zigbee2mqtt
+
+- name: Ntfy deployen
+  hosts: ntfy
+  roles:
+    - ntfy
+
+- name: Proxmox deployen
+  hosts: proxmox
+  roles:
+    - proxmox
+
+- name: Pbs deployen
+  hosts: proxmox_backup
+  roles:
+    - pbs

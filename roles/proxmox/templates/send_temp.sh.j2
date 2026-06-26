@@ -1,0 +1,5 @@
+#!/bin/bash
+TEMP=$(sensors | grep "Package id 0" | awk '{print $4}' | tr -d '+°C')
+UPTIME=$(cat /proc/uptime | awk '{print $1}')
+/usr/bin/mosquitto_pub -h 192.168.178.91 -u 'homeassistant' -P '{{ mqtt_homeassistant_password }}' -t "proxmox/macmini/temp" -m "$TEMP" -r
+/usr/bin/mosquitto_pub -h 192.168.178.91 -u 'homeassistant' -P '{{ mqtt_homeassistant_password }}' -t "proxmox/macmini/uptime" -m "$UPTIME" -r

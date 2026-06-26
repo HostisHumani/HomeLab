@@ -1,0 +1,62 @@
+#!/bin/bash
+
+NTFY_URL="{{ ntfy_url }}/Updates"
+FINAL_MSG=""
+PRIORITY="default"
+TAGS="package"
+
+# ==========================================
+# 1. PROXMOX HOST PRÜFEN
+# ==========================================
+apt update > /dev/null 2>&1
+HOST_UPDATES=$(apt list --upgradable 2>/dev/null | grep -v "Listing..." | wc -l)
+HOST_CRITICAL=$(apt list --upgradable 2>/dev/null | grep -E "proxmox-kernel|pve-kernel|pve-manager|qemu-server|lxc-pve|proxmox-ve" | wc -l)
+
+if [ "$HOST_UPDATES" -gt 0 ]; then
+    if [ "$HOST_CRITICAL" -gt 0 ]; then
+        NAMES=$(apt list --upgradable 2>/dev/null | grep -E "proxmox-kernel|pve-kernel|pve-manager|qemu-server|lxc-pve|proxmox-ve" | cut -d/ -f1 | head -n 3 | tr '\n' ' ')
+        FINAL_MSG="🖥️ Proxmox Host: $HOST_UPDATES Updates (Kritisch: $NAMES...)\n\n"
+        PRIORITY="high"
+        TAGS="warning,computer"
+    else
+        FINAL_MSG="🖥️ Proxmox Host: $HOST_UPDATES Updates (Nur Standard-Patches)\n\n"
+    fi
+fi
+
+# ==========================================
+# 2. LXC CONTAINER PRÜFEN
+# ==========================================
+LXC_MSG=""
+LXC_COUNT=0
+
+for CTID in $(pct list | awk 'NR>1 && $2=="running" {print $1}'); do
+    CT_NAME=$(pct config $CTID | grep -i "hostname:" | awk '{print $2}')
+    pct exec $CTID -- apt update > /dev/null 2>&1
+    CT_UPD=$(pct exec $CTID -- apt list --upgradable 2>/dev/null | grep -v "Listing..." | wc -l)
+
+    if [ "$CT_UPD" -gt 0 ]; then
+        CT_NAMES=$(pct exec $CTID -- apt list --upgradable 2>/dev/null | grep -v "Listing..." | cut -d/ -f1 | head -n 3 | tr '\n' ' ')
+        if [ "$CT_UPD" -gt 3 ]; then
+            LXC_MSG="$LXC_MSG- $CT_NAME: $CT_UPD Updates ($CT_NAMES...)\n"
+        else
+            LXC_MSG="$LXC_MSG- $CT_NAME: $CT_UPD Updates ($CT_NAMES)\n"
+        fi
+        LXC_COUNT=$((LXC_COUNT + 1))
+    fi
+done
+
+if [ "$LXC_COUNT" -gt 0 ]; then
+    FINAL_MSG="${FINAL_MSG}🐳 $LXC_COUNT Container haben Updates:\n$LXC_MSG"
+fi
+
+# ==========================================
+# 3. NACHRICHT SENDEN (FALLS NÖTIG)
+# ==========================================
+if [ -n "$FINAL_MSG" ]; then
+    /usr/bin/curl -u "{{ ntfy_user }}:{{ ntfy_password }}" \
+         -d "$(echo -e "$FINAL_MSG")" \
+         -H "Title: Update Übersicht" \
+         -H "Priority: $PRIORITY" \
+         -H "Tags: $TAGS" \
+         "{{ ntfy_url }}/Updates"
+fi

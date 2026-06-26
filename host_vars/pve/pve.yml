@@ -1,0 +1,4 @@
+ntfy_url: "http://192.168.178.121"
+ntfy_user: "{{ lookup('community.general.bitwarden', 'ntfy-user', field='password') | first }}"
+ntfy_password: "{{ lookup('community.general.bitwarden', 'ntfy-password', field='password') | first }}"
+mqtt_homeassistant_password: "{{ lookup('community.general.bitwarden', 'mqtt-homeassistant-password', field='password') | first }}"

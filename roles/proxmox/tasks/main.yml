@@ -1,0 +1,44 @@
+---
+- name: Check-pve-updates.sh deployen
+  ansible.builtin.template:
+    src: check-pve-updates.sh.j2
+    dest: /usr/local/bin/check-pve-updates.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Send_temp.sh deployen
+  ansible.builtin.template:
+    src: send_temp.sh.j2
+    dest: /usr/local/bin/send_temp.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Pve-remove-nag.sh deployen
+  ansible.builtin.copy:
+    src: pve-remove-nag.sh
+    dest: /usr/local/bin/pve-remove-nag.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Crontab konfigurieren
+  ansible.builtin.cron:
+    name: "{{ item.name }}"
+    minute: "{{ item.minute }}"
+    hour: "{{ item.hour }}"
+    job: "{{ item.job }}"
+  loop:
+    - name: "Send temperature"
+      minute: "*"
+      hour: "*"
+      job: "/usr/local/bin/send_temp.sh"
+    - name: "Check PVE updates"
+      minute: "30"
+      hour: "8"
+      job: "/usr/local/bin/check-pve-updates.sh > /dev/null 2>&1"
+    - name: "PVE git backup"
+      minute: "0"
+      hour: "0"
+      job: "/usr/local/bin/pve-git-backup.sh > /dev/null 2>&1"

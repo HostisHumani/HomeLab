@@ -1,1 +1,15 @@
+# -----------------------------------------------------------------------------
+# Global configuration
+# -----------------------------------------------------------------------------
+
+timezone: Europe/Berlin
+
+# Monitoring
 zabbix_server: 192.168.X.X
+
+# ACME / Let's Encrypt
+acme_email: "{{ lookup('community.general.bitwarden', 'acme-email', field='password') | first }}"
+
+# NPMplus
+npmplus_initial_admin_email: "{{ lookup('community.general.bitwarden', 'npmplus-admin-email', field='password') | first }}"
+npmplus_initial_admin_password: "{{ lookup('community.general.bitwarden', 'npmplus-admin-password', field='password') | first }}"

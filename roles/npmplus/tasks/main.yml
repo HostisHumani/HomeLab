@@ -7,7 +7,7 @@
     group: root
     mode: '0755'
 
-- name: compose.yaml deployen
+- name: Compose.yaml deployen
   ansible.builtin.copy:
     src: compose.yaml
     dest: /opt/compose.yaml

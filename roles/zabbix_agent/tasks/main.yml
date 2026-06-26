@@ -4,7 +4,7 @@
     name: zabbix-agent2
     state: present
 
-- name: zabbix_agent2.conf deployen
+- name: Zabbix_agent2.conf deployen
   ansible.builtin.template:
     src: zabbix_agent2.conf.j2
     dest: /etc/zabbix/zabbix_agent2.conf
@@ -13,7 +13,7 @@
     mode: '0640'
   notify: zabbix-agent2 neu starten
 
-- name: zabbix-agent2 service aktivieren
+- name: Zabbix-agent2 service aktivieren
   ansible.builtin.service:
     name: zabbix-agent2
     state: started

@@ -1,5 +1,5 @@
 ---
-- name: zabbix deployen
+- name: Zabbix deployen
   hosts: zabbix
   roles:
     - zabbix

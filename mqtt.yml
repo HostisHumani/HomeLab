@@ -1,5 +1,5 @@
 ---
-- name: mqtt deployen
+- name: Mqtt deployen
   hosts: mqtt
   roles:
     - mqtt

@@ -1,5 +1,5 @@
 ---
-- name: zigbee2mqtt deployen
+- name: Zigbee2mqtt deployen
   hosts: zigbee2mqtt
   roles:
     - zigbee2mqtt

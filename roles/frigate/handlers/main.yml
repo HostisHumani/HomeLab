@@ -1,10 +1,10 @@
 ---
-- name: zabbix-agent2 neu starten
+- name: Zabbix-agent2 neu starten
   ansible.builtin.service:
     name: zabbix-agent2
     state: restarted
 
-- name: frigate neu starten
+- name: Frigate neu starten
   community.docker.docker_compose_v2:
     project_src: /opt/frigate
     state: present

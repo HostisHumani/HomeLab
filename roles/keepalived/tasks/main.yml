@@ -1,10 +1,10 @@
 ---
-- name: keepalived installieren
+- name: Keepalived installieren
   ansible.builtin.package:
     name: keepalived
     state: present
 
-- name: keepalived.conf deployen
+- name: Keepalived.conf deployen
   ansible.builtin.template:
     src: keepalived.conf.j2
     dest: /etc/keepalived/keepalived.conf
@@ -13,7 +13,7 @@
     mode: '0644'
   notify: keepalived neu starten
 
-- name: keepalived service aktivieren
+- name: Keepalived service aktivieren
   ansible.builtin.service:
     name: keepalived
     state: started

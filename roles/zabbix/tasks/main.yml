@@ -1,5 +1,5 @@
 ---
-- name: zabbix_server.conf deployen
+- name: Zabbix_server.conf deployen
   ansible.builtin.template:
     src: zabbix_server.conf.j2
     dest: /etc/zabbix/zabbix_server.conf

@@ -1,5 +1,5 @@
 ---
-- name: zigbee2mqtt configuration.yaml deployen
+- name: Zigbee2mqtt configuration.yaml deployen
   ansible.builtin.template:
     src: configuration.yaml.j2
     dest: /opt/zigbee2mqtt/data/configuration.yaml

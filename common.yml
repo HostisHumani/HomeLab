@@ -1,5 +1,5 @@
 ---
-- name: common deployen
+- name: Common deployen
   hosts: all:!lxc_alpine
   roles:
     - common

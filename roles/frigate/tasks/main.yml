@@ -7,7 +7,7 @@
     group: root
     mode: '0755'
 
-- name: docker-compose.yml deployen
+- name: Docker-compose.yml deployen
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: /opt/frigate/docker-compose.yml

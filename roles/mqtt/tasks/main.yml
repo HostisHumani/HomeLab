@@ -1,10 +1,10 @@
 ---
-- name: mosquitto installieren
+- name: Mosquitto installieren
   ansible.builtin.package:
     name: mosquitto
     state: present
 
-- name: mosquitto.conf deployen
+- name: Mosquitto.conf deployen
   ansible.builtin.template:
     src: mosquitto.conf.j2
     dest: /etc/mosquitto/mosquitto.conf
@@ -13,7 +13,7 @@
     mode: '0644'
   notify: mosquitto neu starten
 
-- name: default.conf deployen
+- name: Default.conf deployen
   ansible.builtin.template:
     src: default.conf.j2
     dest: /etc/mosquitto/conf.d/default.conf
@@ -29,3 +29,4 @@
     mosquitto_passwd -b /etc/mosquitto/passwd frigate {{ mqtt_frigate_password }}
   notify: mosquitto neu starten
   no_log: true
+  changed_when: true

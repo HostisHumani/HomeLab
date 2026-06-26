@@ -1,5 +1,5 @@
 ---
-- name: paperless deployen
+- name: Paperless deployen
   hosts: paperless
   roles:
     - paperless

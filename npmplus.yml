@@ -1,5 +1,5 @@
 ---
-- name: npmplus deployen
+- name: Npmplus deployen
   hosts: npmplus
   roles:
     - npmplus

@@ -8,8 +8,8 @@
     mode: '0755'
 
 - name: Compose.yaml deployen
-  ansible.builtin.copy:
-    src: compose.yaml
+  ansible.builtin.template:
+    src: compose.yaml.j2
     dest: /opt/compose.yaml
     owner: root
     group: root

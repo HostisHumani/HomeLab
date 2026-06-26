@@ -39,8 +39,8 @@ services:
       #      - "shm-volume:/dev/shm/check-point" # required if you want to use the openappsec attachment module, also enable this volume at the end of this compose.yaml
     environment:
       - TZ=Europe/Berlin
-      - ACME_EMAIL=webmaster@luebb.de
-      - INITIAL_ADMIN_EMAIL=admin@local.com
+      - ACME_EMAIL={{ acme_email }}
+      - INITIAL_ADMIN_EMAIL={{ npmplus_initial_admin_email }}
       - INITIAL_ADMIN_PASSWORD=community-scripts.org
       - ENABLE_PRERUN=true
 #      - "ACME_EMAIL=your-email" # email address to use for acme, optional for letsencrypt, but required for zerossl and google public ca

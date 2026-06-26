@@ -77,3 +77,8 @@ Not every component is managed by Ansible. Some systems intentionally remain out
 * [ ] Immich
 * [ ] GitHub Actions
 * [ ] Extended documentation
+
+
+## License
+
+MIT

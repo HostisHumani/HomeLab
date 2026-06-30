@@ -13,11 +13,13 @@
 [![License](https://img.shields.io/github/license/HostisHumani/HomeLab?style=flat-square)](LICENSE)
 [![Last Commit](https://img.shields.io/github/last-commit/HostisHumani/HomeLab?style=flat-square)](https://github.com/HostisHumani/HomeLab/commits/main)
 
+
 Infrastructure as Code for my personal homelab.
 
 The goal of this project is to build a reproducible, version-controlled and well documented homelab using Ansible as the primary automation tool.
 
 </div>
+
 
 ## Features
 
@@ -99,7 +101,8 @@ Not every component is managed by Ansible. Some systems intentionally remain out
 ## Roadmap
 
 * [x] GitHub Actions
-* [ ] Dell PowerEdge T440 migration
+* [ ] Hardware upgrade decision: Dell PowerEdge T440 vs. mini PC cluster (more RAM/CPU headroom)
+* [ ] Fix SSH password auth on piNAS (sshd_config include order issue, OMV-specific)
 * [ ] OPNsense firewall
 * [ ] Immich
 * [ ] Extended documentation

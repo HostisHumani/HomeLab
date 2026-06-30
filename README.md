@@ -13,11 +13,11 @@
 [![License](https://img.shields.io/github/license/HostisHumani/HomeLab?style=flat-square)](LICENSE)
 [![Last Commit](https://img.shields.io/github/last-commit/HostisHumani/HomeLab?style=flat-square)](https://github.com/HostisHumani/HomeLab/commits/main)
 
-</div>
-
 Infrastructure as Code for my personal homelab.
 
 The goal of this project is to build a reproducible, version-controlled and well documented homelab using Ansible as the primary automation tool.
+
+</div>
 
 ## Features
 

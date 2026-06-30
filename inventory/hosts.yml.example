@@ -44,3 +44,8 @@ all:
         pbs-node:
           ansible_host: 192.168.X.X
           ansible_user: root
+
+    local:
+      hosts:
+        AdminBook:
+          ansible_connection: local

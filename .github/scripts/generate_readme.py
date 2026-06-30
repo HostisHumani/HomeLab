@@ -22,12 +22,14 @@ SERVICE_INFO = {
     "ntfy": ("ntfy", "Debian LXC", "Push Notifications"),
     "zabbix": ("Zabbix", "Debian LXC", "Monitoring"),
     "piNAS": ("OpenMediaVault", "Raspberry Pi 5", "NAS Host (base system only)"),
+    "AdminBook": ("AdminBook", "ThinkPad T480", "Ansible Control Node (admin workstation)"),
 }
 
 # Preferred display order
 HOST_ORDER = [
     "pve", "pbs-node", "technitiumdns", "npmplus", "frigate",
     "paperless", "mqtt", "zigbee2mqtt", "ntfy", "zabbix", "piNAS",
+    "AdminBook",
 ]
 
 

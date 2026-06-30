@@ -58,6 +58,7 @@ The goal of this project is to build a reproducible, version-controlled and well
 | ntfy | Debian LXC | Ansible | Push Notifications |
 | Zabbix | Debian LXC | Ansible | Monitoring |
 | OpenMediaVault | Raspberry Pi 5 | Ansible | NAS Host (base system only) |
+| AdminBook | ThinkPad T480 | Ansible | Ansible Control Node (admin workstation) |
 
 <!-- AUTO-GENERATED-END -->
 

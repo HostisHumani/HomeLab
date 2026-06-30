@@ -1,5 +1,11 @@
 # My HomeLab
 
+[![Ansible](https://img.shields.io/badge/Ansible-EE0000?logo=ansible&logoColor=white)](https://www.ansible.com) [![Proxmox VE](https://img.shields.io/badge/Proxmox%20VE-E57000?logo=proxmox&logoColor=white)](https://www.proxmox.com) [![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](https://www.docker.com) [![Bitwarden](https://img.shields.io/badge/Bitwarden-175DDC?logo=bitwarden&logoColor=white)](https://bitwarden.com)
+
+[![Lint](https://github.com/HostisHumani/HomeLab/actions/workflows/lint.yml/badge.svg)](https://github.com/HostisHumani/HomeLab/actions/workflows/lint.yml) [![Update README](https://github.com/HostisHumani/HomeLab/actions/workflows/update-readme.yml/badge.svg)](https://github.com/HostisHumani/HomeLab/actions/workflows/update-readme.yml) [![Gitleaks](https://github.com/HostisHumani/HomeLab/actions/workflows/gitleaks.yml/badge.svg)](https://github.com/HostisHumani/HomeLab/actions/workflows/gitleaks.yml)
+
+[![License](https://img.shields.io/github/license/HostisHumani/HomeLab?style=flat-square)](LICENSE) [![Last Commit](https://img.shields.io/github/last-commit/HostisHumani/HomeLab?style=flat-square)](https://github.com/HostisHumani/HomeLab/commits/main)
+
 Infrastructure as Code for my personal homelab.
 
 The goal of this project is to build a reproducible, version-controlled and well documented homelab using Ansible as the primary automation tool.

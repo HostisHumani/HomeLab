@@ -111,7 +111,7 @@ Dabei jeden Secret-Wert durch die passende Jinja2-Variable ersetzen:
 
 ```yaml
 # vorher
-DB_PASSWORD=geheimesPasswort123
+DB_PASSWORD=xxxxxxxxxxxxxxxx
 
 # nachher
 DB_PASSWORD={{ immich_db_password }}

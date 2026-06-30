@@ -1,0 +1,28 @@
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Starship überschreibt den Prompt, daher hier nur Fallback falls Starship mal fehlt.
+ZSH_THEME="robbyrussell"
+
+# Which plugins would you like to load?
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Aliases
+alias ll="eza -la --icons"
+alias cat="bat"
+alias homelab="cd ~/lab/HomeLab"
+alias bws="export BW_SESSION=\$(bw unlock --raw)"
+
+export PBS_REPOSITORY="{{ pbs_repository }}"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+export PATH="$HOME/.local/bin:$PATH"

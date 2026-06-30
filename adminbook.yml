@@ -1,0 +1,6 @@
+---
+- name: Adminbook deployen
+  hosts: localhost
+  connection: local
+  roles:
+    - adminbook

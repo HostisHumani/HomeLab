@@ -1,0 +1,1 @@
+pbs_repository: "{{ lookup('community.general.bitwarden', 'pbs-adminbook-repository', field='password') | first }}"

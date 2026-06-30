@@ -25,3 +25,23 @@
     dest: "{{ ansible_facts['env']['HOME'] }}/.config/starship.toml"
     owner: "{{ ansible_facts['user_id'] }}"
     mode: '0644'
+
+- name: GnuPG-Verzeichnis erstellen
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.gnupg"
+    state: directory
+    mode: '0700'
+
+- name: Gpg-agent.conf deployen
+  ansible.builtin.copy:
+    src: gpg-agent.conf
+    dest: "{{ ansible_facts['env']['HOME'] }}/.gnupg/gpg-agent.conf"
+    owner: "{{ ansible_facts['user_id'] }}"
+    mode: '0600'
+
+- name: Scdaemon.conf deployen
+  ansible.builtin.copy:
+    src: scdaemon.conf
+    dest: "{{ ansible_facts['env']['HOME'] }}/.gnupg/scdaemon.conf"
+    owner: "{{ ansible_facts['user_id'] }}"
+    mode: '0600'

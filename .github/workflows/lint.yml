@@ -1,0 +1,57 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ansible-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install ansible-lint
+        run: pip install ansible-lint
+
+      - name: Install collections
+        run: ansible-galaxy collection install community.general community.docker
+
+      - name: Run ansible-lint
+        run: ansible-lint
+
+  syntax-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install ansible
+        run: pip install ansible
+
+      - name: Install collections
+        run: ansible-galaxy collection install community.general community.docker
+
+      - name: Prepare test inventory
+        run: cp inventory/hosts.yml.example /tmp/test_inventory.yml
+
+      - name: Syntax check all playbooks
+        run: |
+          for f in *.yml; do
+            if [ "$f" != "site.yml" ]; then
+              echo "Checking $f"
+              ansible-playbook "$f" --syntax-check -i /tmp/test_inventory.yml
+            fi
+          done

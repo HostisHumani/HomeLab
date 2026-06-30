@@ -1,0 +1,29 @@
+format = """
+$directory\
+$git_branch\
+$git_status\
+$cmd_duration\
+$line_break\
+$character"""
+
+[directory]
+style = "bold #5E81AC"
+format = "[$path]($style) "
+
+[git_branch]
+style = "bold #A3BE8C"
+format = "[on $symbol$branch]($style)"
+symbol = " "
+
+[git_status]
+style = "bold #BF616A"
+format = " [$all_status$ahead_behind]($style)"
+
+[cmd_duration]
+style = "bold #D08770"
+format = " [took $duration]($style)"
+min_time = 2000
+
+[character]
+success_symbol = "[❯](bold #A3BE8C)"
+error_symbol = "[❯](bold #BF616A)"

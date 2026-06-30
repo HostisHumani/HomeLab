@@ -18,3 +18,10 @@
     dest: "{{ ansible_facts['env']['HOME'] }}/.config/kitty/kitty.conf"
     owner: "{{ ansible_facts['user_id'] }}"
     mode: '0644'
+
+- name: Starship.toml deployen
+  ansible.builtin.template:
+    src: starship.toml.j2
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/starship.toml"
+    owner: "{{ ansible_facts['user_id'] }}"
+    mode: '0644'

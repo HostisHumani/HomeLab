@@ -5,3 +5,16 @@
     dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc"
     owner: "{{ ansible_facts['user_id'] }}"
     mode: '0644'
+
+- name: Kitty Config-Verzeichnis erstellen
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/kitty"
+    state: directory
+    mode: '0755'
+
+- name: Kitty.conf deployen
+  ansible.builtin.copy:
+    src: kitty.conf
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/kitty/kitty.conf"
+    owner: "{{ ansible_facts['user_id'] }}"
+    mode: '0644'

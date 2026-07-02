@@ -45,3 +45,10 @@
     dest: "{{ ansible_facts['env']['HOME'] }}/.gnupg/scdaemon.conf"
     owner: "{{ ansible_facts['user_id'] }}"
     mode: '0600'
+
+- name: Kitty Nord-Theme deployen
+  ansible.builtin.copy:
+    src: nord-theme.conf
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/kitty/nord-theme.conf"
+    owner: "{{ ansible_facts['user_id'] }}"
+    mode: '0644'

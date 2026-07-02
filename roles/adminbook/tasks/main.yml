@@ -85,3 +85,25 @@
     dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/config"
     owner: "{{ ansible_facts['user_id'] }}"
     mode: '0600'
+
+- name: CLI-Tools installieren
+  ansible.builtin.package:
+    name:
+      - bat
+      - eza
+      - fzf
+      - zoxide
+      - btop
+    state: present
+  become: true
+
+- name: CLI-Tools installieren
+  ansible.builtin.package:
+    name:
+      - bat
+      - eza
+      - fzf
+      - zoxide
+      - btop
+    state: present
+  become: true

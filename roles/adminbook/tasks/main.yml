@@ -52,3 +52,16 @@
     dest: "{{ ansible_facts['env']['HOME'] }}/.config/kitty/nord-theme.conf"
     owner: "{{ ansible_facts['user_id'] }}"
     mode: '0644'
+
+- name: VS Code Settings deployen
+  ansible.builtin.copy:
+    src: vscode-settings.json
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/Code/User/settings.json"
+    owner: "{{ ansible_facts['user_id'] }}"
+    mode: '0644'
+
+- name: VS Code Extensions installieren
+  ansible.builtin.command:
+    cmd: "code --install-extension {{ item }}"
+  loop: "{{ lookup('file', 'vscode-extensions.txt').splitlines() }}"
+  changed_when: true

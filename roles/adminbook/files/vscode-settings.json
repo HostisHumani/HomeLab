@@ -1,0 +1,22 @@
+{
+    "git.openRepositoryInParentFolders": "always",
+    "workbench.startupEditor": "none",
+    "redhat.telemetry.enabled": false,
+    "gitlens.ai.model": "vscode",
+    "gitlens.ai.vscode.model": "copilotcli:",
+    "editor.formatOnSave": true,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "editor.minimap.enabled": false,
+    "git.autofetch": true,
+    "editor.inlineSuggest.enabled": true,
+    "editor.renderWhitespace": "selection",
+    "explorer.confirmDelete": false,
+    "yaml.schemas": {
+        "file:///home/adrian/.vscode/extensions/continue.continue-2.0.0-linux-x64/config-yaml-schema.json": [
+            ".continue/**/*.yaml"
+        ]
+    },
+    "ansible.lightspeed.enabled": false,
+    "ansible.lightspeed.suggestions.enabled": false
+}

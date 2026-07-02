@@ -98,6 +98,7 @@ Not every component is managed by Ansible. Some systems intentionally remain out
 * Home Assistant OS
 * OpenMediaVault
 * Docker Compose stacks running on OpenMediaVault
+* A Termux mobile dashboard script for quick operational access is available as [![Termux Commander](https://img.shields.io/badge/Termux-Lab%20Commander-4EAA25?logo=gnubash&logoColor=white)](scripts/termux-lab-commander.sh)
 
 ## Roadmap
 

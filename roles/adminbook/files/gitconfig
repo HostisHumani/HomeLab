@@ -1,0 +1,8 @@
+[user]
+	name = HostisHumani
+	email = 199775156+HostisHumani@users.noreply.github.com
+	signingkey = AE9E5187AF502F9D
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg

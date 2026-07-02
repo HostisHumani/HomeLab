@@ -1,0 +1,16 @@
+Host *
+    IdentityAgent /run/user/1000/gnupg/S.gpg-agent.ssh
+    PubkeyAuthentication yes
+    PubkeyAcceptedKeyTypes +ssh-rsa
+
+Host pbs
+    HostName 192.168.178.108
+    User root
+
+Host proxmox
+    HostName 192.168.178.105
+    User root
+
+Host omv
+    HostName 192.168.178.100
+    User root

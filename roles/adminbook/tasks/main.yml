@@ -65,3 +65,23 @@
     cmd: "code --install-extension {{ item }}"
   loop: "{{ lookup('file', 'vscode-extensions.txt').splitlines() }}"
   changed_when: true
+
+- name: .gitconfig deployen
+  ansible.builtin.copy:
+    src: gitconfig
+    dest: "{{ ansible_facts['env']['HOME'] }}/.gitconfig"
+    owner: "{{ ansible_facts['user_id'] }}"
+    mode: '0644'
+
+- name: .ssh Verzeichnis erstellen
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.ssh"
+    state: directory
+    mode: '0700'
+
+- name: SSH config deployen
+  ansible.builtin.copy:
+    src: ssh_config
+    dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/config"
+    owner: "{{ ansible_facts['user_id'] }}"
+    mode: '0600'
